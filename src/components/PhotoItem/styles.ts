@@ -4,7 +4,7 @@ export const Container = styled.div`
   background: var(--grey);
   border-radius: 0.75rem;
   padding: 1rem;
-  text-align: center;
+  position: relative;
 
   img {
     max-width: 100%;
@@ -15,5 +15,14 @@ export const Container = styled.div`
 
   span {
     font-size: 1.25rem;
+  }
+
+  button {
+    background: transparent;
+    border: 0;
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    cursor: pointer;
   }
 `

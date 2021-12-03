@@ -22,15 +22,21 @@ export function App() {
   const [isLoading, setIsLoading] = useState(false)
   const [photos, setPhotos] = useState<Photo[]>([])
 
+  const getPhotos = async () => {
+    setIsLoading(true)
+    const photos = await getAllPhotos()
+    setPhotos(photos)
+    setIsLoading(false)
+  }
+
   useEffect(() => {
-    const getPhotos = async () => {
-      setIsLoading(true)
-      const photos = await getAllPhotos()
-      setPhotos(photos)
-      setIsLoading(false)
-    }
     getPhotos()
   }, [])
+
+  function onChangeItem(item: Photo) {
+    const newList = photos.filter(photo => photo.name !== item.name)
+    setPhotos(newList)
+  }
 
   async function handleFormSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -71,7 +77,13 @@ export function App() {
         {!isLoading && photos.length > 0 && (
           <PhotoListArea>
             {photos.map((item, index) => (
-              <PhotoItem key={index} name={item.name} url={item.url} />
+              <PhotoItem
+                key={index}
+                name={item.name}
+                url={item.url}
+                getPhotos={getPhotos}
+                onChangeItem={onChangeItem}
+              />
             ))}
           </PhotoListArea>
         )}

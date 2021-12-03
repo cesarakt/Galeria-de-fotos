@@ -1,5 +1,11 @@
 import { storage } from './firebaseConnection'
-import { ref, listAll, getDownloadURL, uploadBytes } from 'firebase/storage'
+import {
+  ref,
+  listAll,
+  getDownloadURL,
+  uploadBytes,
+  deleteObject
+} from 'firebase/storage'
 
 import { v4 as uuid } from 'uuid'
 import { Photo } from '../types/Photo'
@@ -39,4 +45,14 @@ export async function insertPhoto(file: File) {
   } else {
     return new Error('Tipo de arquivo inválido!')
   }
+}
+
+export async function deletePhoto(name: string) {
+  const photos = await getAllPhotos()
+  const selectedPhoto = photos.filter(photo => photo.name === name)
+
+  const namePhoto = selectedPhoto[0].name
+  const photoRef = ref(storage, `images/${namePhoto}`)
+
+  await deleteObject(photoRef)
 }
