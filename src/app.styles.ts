@@ -15,7 +15,7 @@ export const Area = styled.div`
 export const TitleHeader = styled.h1`
   font-weight: 600;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 2rem;
 `
 export const ScreenLoading = styled.div`
   text-align: center;
@@ -31,4 +31,33 @@ export const PhotoListArea = styled.div`
   grid-template-columns: repeat(4, 1fr);
   gap: 0.75rem;
   margin: 0 1.5rem;
+`
+
+export const UploadForm = styled.form`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: var(--grey);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  margin-bottom: 2rem;
+  margin: 2rem 1.5rem;
+
+  input[type='submit'] {
+    background: var(--blue-button);
+    border: 0;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin: 0 2rem;
+
+    transition: filter 0.2s;
+
+    &:hover {
+      filter: brightness(0.9);
+    }
+  }
 `

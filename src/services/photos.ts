@@ -1,5 +1,7 @@
 import { storage } from './firebaseConnection'
-import { ref, listAll, getDownloadURL } from 'firebase/storage'
+import { ref, listAll, getDownloadURL, uploadBytes } from 'firebase/storage'
+
+import { v4 as uuid } from 'uuid'
 import { Photo } from '../types/Photo'
 
 export async function getAllPhotos() {
@@ -18,4 +20,23 @@ export async function getAllPhotos() {
     })
   }
   return list
+}
+
+export async function insertPhoto(file: File) {
+  if (['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
+    const randomName = uuid()
+    const newFile = ref(storage, `images/${randomName}`)
+
+    const upload = await uploadBytes(newFile, file)
+    const photoUrl = await getDownloadURL(upload.ref)
+
+    const photoItem = {
+      name: upload.ref.name,
+      url: photoUrl
+    } as Photo
+
+    return photoItem
+  } else {
+    return new Error('Tipo de arquivo inválido!')
+  }
 }
